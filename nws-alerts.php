@@ -3,7 +3,7 @@
 * Plugin Name: National Weather Service Alerts
 * Plugin URI: https://github.com/laubsterboy/nws-alerts
 * Description: Easily add official National Weather Service alerts to your website.
-* Version: 1.0.1
+* Version: 1.1.0
 * Author: John Russell
 * Author URI: http://www.laubsterboy.com
 * Copyright: (c) 2014 John Russell
@@ -36,11 +36,18 @@ add_action('wp_enqueue_scripts', 'NWS_Alerts_Client::scripts_styles');
 if(is_admin()) add_action('wp_ajax_nopriv_nws_alerts_refresh', 'NWS_Alerts_Client::refresh');
 if(is_admin()) add_action('wp_ajax_nws_alerts_refresh', 'NWS_Alerts_Client::refresh');
 
+// Admin - WordPress Settings Page
+add_action('admin_menu', 'NWS_Alerts_Admin::add_settings_menu');
+
 // Admin - WordPress Editor Buttons - TinyMCE Plugins
 add_action('admin_head', 'NWS_Alerts_Admin::admin_head_action');
 add_action('admin_enqueue_scripts', 'NWS_Alerts_Admin::admin_enqueue_scripts_action');
 
 // Admin/Client - WordPress Widget
 add_action('widgets_init', 'NWS_Alerts_Admin::register_widget');
+
+// Client - WordPress output buffer
+add_action('wp_head', 'NWS_Alerts_Client::buffer_start');
+add_action('wp_footer', 'NWS_Alerts_Client::buffer_end');
 
 ?>

@@ -13,10 +13,10 @@ class NWS_Alerts_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct('nws_alert_widget', 'NWS Alerts', array('description' => NWS_ALERTS_DESCRIPTION));
 
-        $this->defaults = array('zip' => null,
-                                'city' => null,
-                                'state' => null,
-                                'county' => null,
+        $this->defaults = array('zip' => false,
+                                'city' => false,
+                                'state' => false,
+                                'county' => false,
                                 'display' => NWS_ALERTS_DISPLAY_FULL,
                                 'scope' => NWS_ALERTS_SCOPE_COUNTY);
 	}
@@ -40,11 +40,9 @@ class NWS_Alerts_Widget extends WP_Widget {
         if (!empty($instance['zip']) || (!empty($instance['city']) && !empty($instance['state'])) || (!empty($instance['state']) && !empty($instance['county']))) {
             $nws_alert_data = new NWS_Alerts(array('zip' => $instance['zip'], 'city' => $instance['city'], 'state' => $instance['state'], 'county' => $instance['county'], 'scope' => $instance['scope']));
 
-            if ($instance['display'] == NWS_ALERTS_DISPLAY_BASIC) {
-                echo $nws_alert_data->get_output_html(false);
-            } else {
-                echo $nws_alert_data->get_output_html(true);
-            }
+            echo $args['before_widget'];
+            echo $nws_alert_data->get_output_html($instance['display'], 'nws-alerts-widget');
+            echo $args['after_widget'];
 
             unset($nws_alert_data);
         }
@@ -107,8 +105,9 @@ class NWS_Alerts_Widget extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id('display'); ?>">Display:</label>
             <select class="widefat" id="<?php echo $this->get_field_id('display'); ?>" name="<?php echo $this->get_field_name('display'); ?>">
-                <option value="<?php echo NWS_ALERTS_DISPLAY_FULL ?>"<?php selected($instance['display'], NWS_ALERTS_DISPLAY_FULL) ?>><?php echo NWS_ALERTS_DISPLAY_FULL ?></option>
+                <option value="<?php echo NWS_ALERTS_DISPLAY_BAR ?>"<?php selected($instance['display'], NWS_ALERTS_DISPLAY_BAR) ?>><?php echo NWS_ALERTS_DISPLAY_BAR ?></option>
                 <option value="<?php echo NWS_ALERTS_DISPLAY_BASIC ?>"<?php selected($instance['display'], NWS_ALERTS_DISPLAY_BASIC) ?>><?php echo NWS_ALERTS_DISPLAY_BASIC ?></option>
+                <option value="<?php echo NWS_ALERTS_DISPLAY_FULL ?>"<?php selected($instance['display'], NWS_ALERTS_DISPLAY_FULL) ?>><?php echo NWS_ALERTS_DISPLAY_FULL ?></option>
             </select>
         </p>
         <p>
