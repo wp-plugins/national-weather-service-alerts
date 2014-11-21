@@ -16,17 +16,15 @@ class NWS_Alerts_Shortcodes {
     * @return string
     */
     public static function shortcode_handler($atts) {
-        extract(shortcode_atts(array('zip' => null, 'city' => null, 'state' => null, 'county' => null, 'display' => NWS_ALERTS_DISPLAY_FULL, 'scope' => NWS_ALERTS_SCOPE_COUNTY), $atts));
+        extract(shortcode_atts(array('zip' => false, 'city' => false, 'state' => false, 'county' => false, 'display' => NWS_ALERTS_DISPLAY_FULL, 'scope' => NWS_ALERTS_SCOPE_COUNTY), $atts));
 
         if ($scope !== NWS_ALERTS_SCOPE_NATIONAL && $scope !== NWS_ALERTS_SCOPE_STATE && $scope !== NWS_ALERTS_SCOPE_COUNTY) $scope = NWS_ALERTS_SCOPE_COUNTY;
 
         $nws_alerts_data = new NWS_Alerts(array('zip' => $zip, 'city' => $city, 'state' => $state, 'county' => $county, 'scope' => $scope));
 
-        if ($display == NWS_ALERTS_DISPLAY_BASIC) {
-            return $nws_alerts_data->get_output_html(false);
-        } else {
-            return $nws_alerts_data->get_output_html(true);
-        }
+
+        return $nws_alerts_data->get_output_html($display);
+
 
         unset($nws_alerts_data);
     }
