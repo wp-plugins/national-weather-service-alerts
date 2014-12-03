@@ -17,6 +17,7 @@ class NWS_Alerts_Widget extends WP_Widget {
                                 'city' => false,
                                 'state' => false,
                                 'county' => false,
+                                'location_title' => false,
                                 'display' => NWS_ALERTS_DISPLAY_FULL,
                                 'scope' => NWS_ALERTS_SCOPE_COUNTY);
 	}
@@ -41,7 +42,7 @@ class NWS_Alerts_Widget extends WP_Widget {
             $nws_alert_data = new NWS_Alerts(array('zip' => $instance['zip'], 'city' => $instance['city'], 'state' => $instance['state'], 'county' => $instance['county'], 'scope' => $instance['scope']));
 
             echo $args['before_widget'];
-            echo $nws_alert_data->get_output_html($instance['display'], 'nws-alerts-widget');
+            echo $nws_alert_data->get_output_html($instance['display'], 'nws-alerts-widget', array('location_title' => $instance['location_title']));
             echo $args['after_widget'];
 
             unset($nws_alert_data);
@@ -63,6 +64,8 @@ class NWS_Alerts_Widget extends WP_Widget {
 	 */
 	public function update($new_instance, $old_instance) {
 		$instance = wp_parse_args($new_instance, $this->defaults);
+
+        if ($new_instance['location_title'] === '') $instance['location_title'] = false;
 
 		return $instance;
 	}
@@ -101,6 +104,10 @@ class NWS_Alerts_Widget extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id('county'); ?>">County:</label>
             <input class="widefat" id="<?php echo $this->get_field_id('county'); ?>" name="<?php echo $this->get_field_name('county'); ?>" type="text" value="<?php echo esc_attr($instance['county']); ?>">
+		</p>
+        <p>
+            <label for="<?php echo $this->get_field_id('location_title'); ?>">Location Title:</label>
+            <input class="widefat" id="<?php echo $this->get_field_id('location_title'); ?>" name="<?php echo $this->get_field_name('location_title'); ?>" type="text" value="<?php echo esc_attr($instance['location_title']); ?>">
 		</p>
         <p>
             <label for="<?php echo $this->get_field_id('display'); ?>">Display:</label>
