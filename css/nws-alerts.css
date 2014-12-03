@@ -2,14 +2,14 @@
 
 .nws-alerts {
     position:relative;
-    z-index:100;
+    z-index:3;
     float:left;
     clear:both;
     box-sizing:border-box;
     opacity:1;
 }
 .nws-alerts:hover {
-    z-index:110;
+    z-index:10000;
 }
 .nws-alerts:after {
     content:"";
@@ -185,10 +185,10 @@
     color:#333;
 }
 .nws-alerts:hover .nws-alerts-entries {
-    max-height:300px;
+    max-height:200px;
 }
 .nws-alerts-widget:hover .nws-alerts-entries {
-    max-height:200px;
+    max-height:160px;
 }
 .nws-alerts-entry {
 	font-size:0.8em;
@@ -293,7 +293,7 @@
 
 .nws-alerts-map {
     width:100%;
-    height:300px;
+    height:200px;
 }
 
 

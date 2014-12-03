@@ -4,7 +4,7 @@ Contributors: laubsterboy
 Tags: National Weather Service, NWS, Storm Prediction Center, SPC, Alert, Weather, Storm, Severe, Tornado, Thunder, Flood
 Requires at least: 3.1
 Tested up to: 4.0.1
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ Simply refreshing the page should fix the problem.
 
 == Changelog ==
 
+= 1.2.0 =
+* Added Feature: The location title can now be overridden with a custom name.
+* Added Feature: The alert entry details now include a link to the official NWS notice. Also, the effective and expiration date and times are included as part of each entries details.
+* Added Feature: NWS Alerts XML is now cached, when possible, to speed up page loads.
+* Improvement: NWS Alerts XML is now fetched using CURL if server support is available.
+
 = 1.1.1 =
 * Fixed: Bug fix that prevented the alerts from auto-updating using AJAX.
 * Improvement: The plugin activation process is simplified and should work on all web hosts.
@@ -115,7 +121,10 @@ Simply refreshing the page should fix the problem.
 
 == Upgrade Notice ==
 
-= 1.1.1=
+= 1.2.0 =
+* Improved compatibility with web hosts for fetching NWS Alerts, and alerts are now cached when possible. Added new display features.
+
+= 1.1.1 =
 * Bug fixes with alerts auto-updating and revamped the activation process.
 
 = 1.1.0 =

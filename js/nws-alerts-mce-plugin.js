@@ -15,11 +15,11 @@
 
     nwsAlertsShortcode = {
         init: function () {
-            console.log('init');
             controlValues.zip = '';
             controlValues.city = '';
             controlValues.state = '';
             controlValues.county = '';
+            controlValues.location_title = '';
             controlValues.display = 'full';
             controlValues.scope = 'county';
 
@@ -103,6 +103,7 @@
             if (controlValues.city !== controlValuesDefaults.city) { shortcode += ' city="' + controlValues.city + '"'; }
             if (controlValues.state !== controlValuesDefaults.state) { shortcode += ' state="' + controlValues.state + '"'; }
             if (controlValues.county !== controlValuesDefaults.county) { shortcode += ' county="' + controlValues.county + '"'; }
+            if (controlValues.location_title !== controlValuesDefaults.location_title) { shortcode += ' location_title="' + controlValues.location_title + '"'; }
             if (controlValues.display !== controlValuesDefaults.display) { shortcode += ' display="' + controlValues.display + '"'; }
             if (controlValues.scope !== controlValuesDefaults.scope) { shortcode += ' scope="' + controlValues.scope + '"'; }
 

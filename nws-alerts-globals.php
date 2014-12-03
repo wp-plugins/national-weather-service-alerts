@@ -6,7 +6,7 @@
 global $wpdb, $tinymce_version;
 
 // NWS Alerts Version Information
-define('NWS_ALERTS_VERSION', '1.1.1');
+define('NWS_ALERTS_VERSION', '1.2.0');
 define('NWS_ALERTS_MIN_WP_VERSION', '3.1');
 define('NWS_ALERTS_MIN_PHP_VERSION', '5');
 if (intval(substr($tinymce_version, 0, 1)) === 4) {
@@ -25,6 +25,7 @@ define('NWS_ALERTS_BAR_ZIP', get_option('nws_alerts_alerts_bar_zip'));
 define('NWS_ALERTS_BAR_CITY', get_option('nws_alerts_alerts_bar_city'));
 define('NWS_ALERTS_BAR_STATE', get_option('nws_alerts_alerts_bar_state'));
 define('NWS_ALERTS_BAR_COUNTY', get_option('nws_alerts_alerts_bar_county'));
+define('NWS_ALERTS_BAR_LOCATION_TITLE', get_option('nws_alerts_alerts_bar_location_title'));
 define('NWS_ALERTS_BAR_SCOPE', get_option('nws_alerts_alerts_bar_scope'));
 define('NWS_ALERTS_BAR_FIX', get_option('nws_alerts_alerts_bar_fix'));
 

@@ -7,11 +7,18 @@
 
 class NWS_Alerts_Entry {
     /**
-    * The ID of the NWS_Alerts entry - a string URL pointing to the XML file for the specific alert entry.
+    * The ID of the NWS_Alerts_Entry - linear starting with 0 and relative to the NWS_Alerts instance.
     *
     * @var string
     */
     public $ID = '';
+
+    /**
+    * The ID of the NWS_Alerts entry - a string URL pointing to the XML file for the specific alert entry.
+    *
+    * @var string
+    */
+    public $id = '';
 
     /**
     * The date when the NWS_Alerts entry was last updated.
@@ -234,7 +241,7 @@ class NWS_Alerts_Entry {
 
         // Size
 		if ($details) {
-            $return_value = '<span class="nws-alerts-event nws-alerts-color-' . $this->cap_event_slug . '">' . $this->cap_event . '</span><br /> ' . ucwords(strtolower($this->summary));
+            $return_value = '<span class="nws-alerts-event nws-alerts-color-' . $this->cap_event_slug . '">' . $this->cap_event . '</span><br /> ' . ucwords(strtolower($this->summary)) . ' ...<a href="' . $this->id . '">Read More</a>.<br /><span class="nws-alerts-event-effective"><strong>Effective:</strong> ' . $this->cap_effective . '</span><br /><span class="nws-alerts-event-expires"><strong>Expires:</strong> ' . $this->cap_expires . '</span>';
         } else {
             $return_value = '<span class="nws-alerts-event nws-alerts-color-' . $this->cap_event_slug . '">' . $this->cap_event . '</span>';
         }
