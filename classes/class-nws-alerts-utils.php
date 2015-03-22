@@ -2,6 +2,10 @@
 // NWS Alerts Plugin Utility Functions
 
 class NWS_Alerts_Utils {
+
+    static $displays = array();
+
+
     /*
     * @return array
     * @access public
@@ -129,8 +133,13 @@ class NWS_Alerts_Utils {
         // The timestamp from NWS comes in as GMT and must be adjusted for UTC
         $offset = get_option('gmt_offset');
         $date_time->modify("$offset hours");
-        $return_value = $date_time->format('F j, Y \a\t g:ia');
-        return $return_value;
+        return $date_time->format('F j, Y \a\t g:ia');
+    }
+
+
+
+    public static function get_date_format($date_time) {
+        return $date_time->format('F j, Y \a\t g:ia');
     }
 
 
@@ -150,6 +159,59 @@ class NWS_Alerts_Utils {
         }
 
         return $associative_array;
+    }
+
+
+
+    /*
+    *
+    *
+    * @return boolean
+    * @access public
+    */
+    public static function register_display_template($args = array()) {
+        if ((isset($args['display']) && !is_string($args['display'])) ||
+            (isset($args['name']) && !is_string($args['name'])) ||
+            array_key_exists($args['display'], self::$displays) ||
+            self::get_template_path('template-display-' . $args['display'] . '.php') === false) return false;
+
+        self::$displays[$args['display']] = $args['name'];
+
+        return true;
+    }
+
+
+
+    /*
+    * @return string
+    * @access public
+    */
+    public static function get_template_path($template_filename = false) {
+        $return_value = false;
+
+        if (is_string($template_filename)) {
+            $template_directory_paths = apply_filters('nws_alerts_template_path', array(
+                // Child Theme
+                get_stylesheet_directory() . 'plugins/national-weather-service-alerts/templates/',
+                // Parent Theme
+                get_template_directory() . 'plugins/national-weather-service-alerts/templates/',
+                // NWS Alerts
+                NWS_ALERTS_ABSPATH . 'templates/'), $template_filename);
+
+            foreach ($template_directory_paths as $path) {
+                if (file_exists($path . $template_filename)) {
+                    $return_value = $path . $template_filename;
+                    break;
+                }
+            }
+
+            // NWS Alerts default template - in case all templates have been filtered out.
+            if ($return_value === false) {
+                $return_value = NWS_ALERTS_ABSPATH . 'templates/template-display-full.php';
+            }
+        }
+
+        return $return_value;
     }
 }
 

@@ -3,8 +3,8 @@
 Contributors: laubsterboy
 Tags: National Weather Service, NWS, Storm Prediction Center, SPC, Alert, Weather, Storm, Severe, Tornado, Thunder, Flood
 Requires at least: 3.1
-Tested up to: 4.0.1
-Stable tag: 1.2.0
+Tested up to: 4.1.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,10 +15,9 @@ Easily add official National Weather Service alerts to your website.
 
 == Description ==
 
-The National Weather Service Alerts plugin allows you to easily display weather alerts, such as tornado warnings, 
-severe thunderstorm warnings, or flash flood warnings, on your website. The alerts are pulled directly from the
-National Weather Service (http://alerts.weather.gov) based on the location that you specify and are then parsed,
-sorted, and output to your website. The alerts are then automatically updated using
+The National Weather Service Alerts plugin allows you to easily display weather alerts on your website. The 
+alerts are pulled directly from the National Weather Service (http://alerts.weather.gov) based on the location 
+that you specify and are then parsed, sorted, and output to your website. The alerts are then automatically updated using
 AJAX, based on the severity of the alerts for the specified location. The location can be set by using zipcode, 
 city and state, or state and county. There is also the option to choose the scope of what alerts to include, 
 such as alerts only for your county, alerts only for your state, or alerts for the entire United States.
@@ -38,6 +37,21 @@ used.*
 * Clean html5 markup
 * CSS classes that make it easy to override default styles
 * Developer API (filters)
+
+**Weather Alerts**
+
+* Tornado Warning
+* Severe Thunderstorm Warning
+* Flash Flood Warning
+* Flood Warning
+* Blizzard Warning
+* Winter Storm Warning
+* Freeze Warning
+* Dust Storm Warning
+* High Wind Warning
+
+*The default weather alert types can be modified using the 'nws_alerts_allowed_alert_types' 
+and 'nws_alerts_sort_alert_types' filter hooks.
 
 
 
@@ -93,6 +107,18 @@ Simply refreshing the page should fix the problem.
 
 == Changelog ==
 
+= 1.3.0 =
+* Added Feature: Support for WordPress Multisite.
+* Added Feature: 'nws_alerts_template_path' filter, which can be used to specify alternative template paths.
+* Added Feature: 'nws-alerts-page-builder-index-fix' CSS class that is unused, but intended to be added via page builder (Visual Composer, Beaver Builder, etc) to ensure that NWS Alerts display on top of surrounding content.
+* Added Feature: New display templates can be created and added by calling NWS_Alerts_Utils::register_display_template.
+* Added Feature: Alert entries can now be limited to a specified amount.
+* Improvement: The outputting of html has been moved to templates. Default plugin templates can be overridden by copying the template files into child theme and parent theme directories and then modified.
+* Improvement: Each Alert entry now includes the Target Area.
+* Removed: NWS_Alerts->get_output_headings object method.
+* Fixed: Alert effective and expiration times. They're no longer adjusted to the WordPress gmt_offset for the site.
+* Fixed: Auto updating alerts via AJAX. This was broken in update 1.2.0.
+
 = 1.2.0 =
 * Added Feature: The location title can now be overridden with a custom name.
 * Added Feature: The alert entry details now include a link to the official NWS notice. Also, the effective and expiration date and times are included as part of each entries details.
@@ -120,6 +146,9 @@ Simply refreshing the page should fix the problem.
 
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+* Added support for WordPress Multisite, fixed bugs, display settings now use templates, and the number of alert entries shown can be limited.
 
 = 1.2.0 =
 * Improved compatibility with web hosts for fetching NWS Alerts, and alerts are now cached when possible. Added new display features.

@@ -11,12 +11,14 @@ Author URI: http://www.laubsterboy.com
     "use strict";
 
     function setup() {
-        var zip = $(this).data('zip'),
-            display = $(this).data('display'),
-            scope = $(this).data('scope'),
-            classes = $(this).attr('class'),
-            locationTitle = $(this).find('.nws-alerts-heading-location'),
-            refreshRate = parseInt($(this).data('refresh_rate')) * 60000,
+        var settings = $(this).data('settings'),
+            zip = settings.zip,
+            scope = settings.scope,
+            limit = settings.limit,
+            display = settings.display,
+            classes = settings.classes,
+            locationTitle = settings.location_title,
+            refreshRate = parseInt(settings.refresh_rate) * 60000,
             element = this;
 
         setTimeout(function () {
@@ -26,10 +28,12 @@ Author URI: http://www.laubsterboy.com
                 data: {
                     action: 'nws_alerts_refresh',
                     zip: zip,
-                    display: display,
                     scope: scope,
+                    limit: limit,
+                    display: display,
+                    classes: classes,
                     location_title: locationTitle,
-                    classes: classes
+                    refresh_rate: refreshRate
                 },
                 success: function (html, textStatus, jqXHR) {
                     if (html != 0) update(html, element);

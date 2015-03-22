@@ -285,6 +285,13 @@ class NWS_Alerts_Admin {
                     $controls[$control] = $_POST[$key];
                 }
 
+                $control = 'limit';
+                $key = $prefix . $control;
+                if (isset($_POST[$key])) {
+                    update_option($key, $_POST[$key]);
+                    $controls[$control] = $_POST[$key];
+                }
+
                 $control = 'fix';
                 $key = $prefix . $control;
                 if (isset($_POST[$key]) && $_POST[$key] == 'on') {
@@ -446,6 +453,7 @@ class NWS_Alerts_Admin {
                             $return_value .= self::get_control('location_title', $control_id_prefix);
                             $return_value .= self::get_control('display', $control_id_prefix);
                             $return_value .= self::get_control('scope', $control_id_prefix);
+                            $return_value .= self::get_control('limit', $control_id_prefix);
 
 
                         $return_value .= '</tbody>';
@@ -488,6 +496,7 @@ class NWS_Alerts_Admin {
                               'county' => NWS_ALERTS_BAR_COUNTY,
                               'location_title' => NWS_ALERTS_BAR_LOCATION_TITLE,
                               'scope' => NWS_ALERTS_BAR_SCOPE,
+                              'limit' => NWS_ALERTS_BAR_LIMIT,
                               'fix' => NWS_ALERTS_BAR_FIX);
             $controls = wp_parse_args($controls, $defaults);
             $return_value = '';
@@ -643,15 +652,15 @@ class NWS_Alerts_Admin {
 				$return_value .= '</td>';
 			$return_value .= '</tr>';
         } else if ($control === 'display') {
-            if ($default === false) { $default = NWS_ALERTS_DISPLAY_FULL; }
+            if ($default === false) { $default = NWS_ALERTS_DISPLAY_DEFAULT; }
             $return_value .= '<tr>';
 				$return_value .= '<td><h4>Display</h4><p class="howto">Bar: Graphic, Scope, Location, and Alert Type for the most severe current alert, in a horizontal layout.</p><p class="howto">Basic: Graphic, Scope, Location, and Alert Type for the most severe current alert, but no mouse over details.</p><p class="howto">Full: Graphic, Scope, Location, and Alert Type for the most severe current alert, and mouse over for all other alerts (including Alert Descriptions and Google Map) within the scope of the designated location.</p></td>';
 				$return_value .= '<td>';
 					$return_value .= '<div class="nws-alerts-control-select-container">';
                         $return_value .= '<select data-control-parent="' . $control . '" data-control="' . $control . '" id="' . $control_id_prefix . '-' . $control . '" name="' . str_replace('-', '_', $control_id_prefix . '_' . $control) . '">';
-                            $return_value .= '<option value="' . NWS_ALERTS_DISPLAY_BAR . '"' . selected($default, NWS_ALERTS_DISPLAY_BAR, false) . '>Bar</option>';
-                            $return_value .= '<option value="' . NWS_ALERTS_DISPLAY_BASIC . '"' . selected($default, NWS_ALERTS_DISPLAY_BASIC, false) . '>Basic</option>';
-                            $return_value .= '<option value="' . NWS_ALERTS_DISPLAY_FULL . '"' . selected($default, NWS_ALERTS_DISPLAY_FULL, false) . '>Full</option>';
+                            foreach (NWS_Alerts_Utils::$displays as $display => $name) {
+                                $return_value .= '<option value="' . $display . '"' . selected($default, $display, false) . '>' . $name . '</option>';
+                            }
                         $return_value .= '</select>';
 					$return_value .= '</div>';
 				$return_value .= '</td>';
@@ -667,6 +676,16 @@ class NWS_Alerts_Admin {
                             $return_value .= '<option value="' . NWS_ALERTS_SCOPE_STATE . '"' . selected($default, NWS_ALERTS_SCOPE_STATE, false) . '>State</option>';
                             $return_value .= '<option value="' . NWS_ALERTS_SCOPE_NATIONAL . '"' . selected($default, NWS_ALERTS_SCOPE_NATIONAL, false) . '>National</option>';
                         $return_value .= '</select>';
+					$return_value .= '</div>';
+				$return_value .= '</td>';
+			$return_value .= '</tr>';
+        } else if ($control === 'limit') {
+            if ($default) { $default = ' value="' . $default . '"'; } else { $default = '0'; }
+            $return_value .= '<tr>';
+				$return_value .= '<td><h4>Limit (optional)</h4><p class="howto">Set to zero for no limit, otherwise the amount of alert entries will be limited to the amount specified, after alert entries have been filtered and sorted by type.</p></td>';
+				$return_value .= '<td>';
+					$return_value .= '<div class="nws-alerts-control-text-container">';
+				        $return_value .= '<input data-control-parent="' . $control . '" data-control="' . $control . '" id="' . $control_id_prefix . '-' . $control . '" name="' . str_replace('-', '_', $control_id_prefix . '_' . $control) . '" type="text"' . $default . ' />';
 					$return_value .= '</div>';
 				$return_value .= '</td>';
 			$return_value .= '</tr>';
