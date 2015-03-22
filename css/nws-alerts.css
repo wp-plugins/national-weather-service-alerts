@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+.widget_nws_alert_widget:after {
+	content:"";
+	display:block;
+	clear:both;
+}
+
 .nws-alerts {
     position:relative;
     z-index:3;
@@ -8,7 +14,8 @@
     box-sizing:border-box;
     opacity:1;
 }
-.nws-alerts:hover {
+.nws-alerts-collapsible:hover,
+.nws-alerts-page-builder-index-fix {
     z-index:10000;
 }
 .nws-alerts:after {
@@ -52,12 +59,12 @@
 
 .nws-alerts-heading {
     position:relative;
+    margin-bottom:1em;
     z-index:1;
-    float:left;
-    padding:20px;
     box-sizing:border-box;
     white-space:nowrap;
 }
+.nws-alerts-collapsible .nws-alerts-heading {float:left; margin-bottom:0; padding:20px;}
 .nws-alerts-bar .nws-alerts-heading {float:none; color:#000;}
 .nws-alerts-bar-fix .nws-alerts-heading {float:left;}
 .nws-alerts-widget .nws-alerts-heading {padding:0 0 20px 0;}
@@ -70,11 +77,14 @@
     display:block;
 }
 .nws-alerts-heading .nws-alerts-heading-scope {
-    margin:0 0 0 70px;
     display:block;
-    font-size: 0.9em;
-    color: #888;
+    margin:0 0 0 70px;
+    font-size:0.9em;
+    color:#888;
     line-height:1.5;
+}
+.widget-title .nws-alerts-heading-scope {
+	color:inherit;
 }
 .nws-alerts-heading .nws-alerts-heading-location {
     clear:none;
@@ -117,20 +127,22 @@
 
 
 .nws-alerts-details {
-    position:absolute;
-    z-index:0;
-    top:50%;
-    left:0;
-    right:0;
     display:block;
-    height:0;
-    background-color:#f1f1f1;
-    opacity:0;
     overflow:hidden;
     transition:top 400ms, opacity 400ms;
     border-radius:6px;
 }
-.nws-alerts:hover .nws-alerts-details {
+.nws-alerts-collapsible .nws-alerts-details {
+	position:absolute;
+	z-index:0;
+	top:50%;
+    left:0;
+    right:0;
+    height:0;
+    opacity:0;
+    background-color:#f1f1f1;
+}
+.nws-alerts-collapsible:hover .nws-alerts-details {
     top:100%;
     height:auto;
     opacity:1;
@@ -141,7 +153,8 @@
     box-shadow:0 0 0.25em 0 rgba(0,0,0,0.25);
     overflow:visible;
 }
-.nws-alerts-details:after, .nws-alerts-details:before {
+.nws-alerts-collapsible .nws-alerts-details:after,
+.nws-alerts-collapsible .nws-alerts-details:before {
 	bottom:100%;
 	left:50%;
 	border:solid transparent;
@@ -152,13 +165,13 @@
 	pointer-events:none;
 }
 
-.nws-alerts-details:after {
+.nws-alerts-collapsible .nws-alerts-details:after {
 	border-color:rgba(241, 241, 241, 0);
 	border-bottom-color:#f1f1f1;
 	border-width:16px;
 	margin-left:-16px;
 }
-.nws-alerts-details:before {
+.nws-alerts-collapsible .nws-alerts-details:before {
 	border-color:rgba(204, 204, 204, 0);
 	border-bottom-color:#cccccc;
 	border-width:17px;
@@ -175,26 +188,30 @@
 
 .nws-alerts-entries {
     display:block;
-    padding:20px;
     box-sizing:border-box;
     width:100%;
     height:auto;
-    max-height:0;
     overflow:auto;
-    transition:max-height 300ms;
     color:#333;
 }
-.nws-alerts:hover .nws-alerts-entries {
-    max-height:200px;
+.nws-alerts-collapsible .nws-alerts-entries {
+	max-height:0;
+	padding:20px;
+	transition:max-height 300ms;
 }
-.nws-alerts-widget:hover .nws-alerts-entries {
-    max-height:160px;
+.nws-alerts-collapsible:hover .nws-alerts-entries {
+    max-height:200px;
 }
 .nws-alerts-entry {
 	font-size:0.8em;
 	font-weight:100;
 	line-height: 1.5;
 	margin-bottom: 1.5em;
+}
+.nws-alerts-entry:after {
+    content: "";
+    display: block;
+    clear: both;
 }
 
 
@@ -219,8 +236,27 @@
 
 .nws-alerts-entry-graphic {
     float:left;
-    margin-right:20px;
+    margin-right:10px;
     display:block;
+}
+
+.nws-alerts-event-effective,
+.nws-alerts-event-expires {
+    display:inline-block;
+    width:45%;
+    width:calc(50% - 5px);
+}
+.nws-alerts-event-effective {
+    float:left;
+    margin-right:5px;
+}
+.nws-alerts-event-expires {
+    float:right;
+    margin-left:5px;
+}
+.nws-alerts-event-area {
+	display:block;
+	clear:both;
 }
 
 /* Blizzard Warning */
@@ -320,6 +356,17 @@
 .nws-alerts-color-avalanche-watch,
 .nws-alerts-color-frost-advisory {color:#11ccff;}
 
+
+
+
+/* Styles */
+.nws-alerts-style-callout {
+	margin:10px 0;
+    padding:10px;
+    border-radius:3px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+}
 
 
 
